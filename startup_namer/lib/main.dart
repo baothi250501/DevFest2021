@@ -36,6 +36,16 @@ class _RandomWordsState extends State<RandomWords>{
     return Scaffold(
       appBar: AppBar(
         title: Text('Startup Name Generator'),
+        //Add a list icon to the AppBar in the build method for _RandomWordsState.
+        //When the user clicks the list icon, a new route that
+        //contains the saved favorites is pushed to the Navigator, displaying the icon.
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.list),
+            onPressed: _pushSaved,
+            tooltip: 'Saved Suggestions',
+          )
+        ],
       ),
       body: _buildSuggestions(),
     );
@@ -104,5 +114,40 @@ class _RandomWordsState extends State<RandomWords>{
     );
   }
 
+  void _pushSaved() {
+    //Pushes the route to the Navigator's stack
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) {
+          final tiles = _saved.map(
+            (pair) {
+              return ListTile(
+                title: Text(
+                  pair.asPascalCase,
+                  style: _biggerFont,
+                ),
+              );
+            },
+          );
+
+          //Jolds the final rows converted to a list by the convenience function
+          final divided = tiles.isNotEmpty
+            //Adds horizontal spacing between each ListTile
+            ? ListTile.divideTiles(
+                context: context,
+                tiles: tiles,
+            ).toList()
+            : <Widget>[];
+
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Saved Suggestions'),
+            ),
+            body: ListView(children: divided),
+          );
+        },
+      )
+    );
+  }
 }
 
