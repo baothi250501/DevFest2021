@@ -3,10 +3,27 @@ import 'package:english_words/english_words.dart';
 
 void main() => runApp(MyApp());
 
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Welcome to Flutter',
+      home: RandomWords(),
+    );
+  }
+}
+
+class RandomWords extends StatefulWidget{
+  @override
+  _RandomWordsState createState() => _RandomWordsState();
+}
+
 class _RandomWordsState extends State<RandomWords>{
 
   //List for saving suggested word pairings
   final _suggestions = <WordPair>[];
+
+  final _saved = <WordPair>[];
 
   //Variable for making the font size larger
   final _biggerFont = const TextStyle(fontSize: 18.0);
@@ -59,25 +76,23 @@ class _RandomWordsState extends State<RandomWords>{
   }
 
   Widget _buildRow(WordPair pair){
+
+    //Check to ensure that
+    //a word pairing has not already been added to favorites.
+    final alreadySaved = _saved.contains(pair);
+
     return ListTile(
       title: Text(
         pair.asPascalCase,
         style: _biggerFont,
       ),
+      trailing: Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red: null,
+        semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
+      ),
     );
   }
 
 }
-class RandomWords extends StatefulWidget{
-  @override
-  _RandomWordsState createState() => _RandomWordsState();
-}
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: RandomWords(),
-    );
-  }
-}
+
