@@ -75,6 +75,16 @@ class _LoginPageState extends State<LoginPage> {
                   children: <Widget> [
                     TextButton(
                       child: const Text('CANCEL'),
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all(
+                          Theme.of(context).colorScheme.secondary,
+                        ),
+                        shape: MaterialStateProperty.all(
+                          const BeveledRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                          ),
+                        ),
+                      ),
                       onPressed:(){
                         _usernameController.clear();
                         _passwordController.clear();
@@ -84,6 +94,11 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text('NEXT'),
                       style: ButtonStyle(
                         elevation: MaterialStateProperty.all(8.0),
+                        shape: MaterialStateProperty.all(
+                          const BeveledRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                          ),
+                        ),
                       ),
                       onPressed: (){
                         Navigator.pop(context);
