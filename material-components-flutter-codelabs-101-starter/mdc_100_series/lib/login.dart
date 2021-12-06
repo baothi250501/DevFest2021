@@ -82,6 +82,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ElevatedButton(
                       child: const Text('NEXT'),
+                      style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(8.0),
+                      ),
                       onPressed: (){
                         Navigator.pop(context);
                       },
