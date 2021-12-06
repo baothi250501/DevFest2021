@@ -13,9 +13,13 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:shrine/model/product.dart';
 import 'package:shrine/model/products_repository.dart';
+import 'model/products_repository.dart';
+import 'model/product.dart';
+import 'supplemental/asymmetric_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,14 +34,15 @@ class HomePage extends StatelessWidget {
       // TODO: Add app bar (102)
         appBar: AppBar(
           title: const Text('SHRINE'),
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
           leading: IconButton(
-              onPressed: (){
-                print('Menu button');
-              },
               icon: const Icon(
                 Icons.menu,
                 semanticLabel: 'menu',
-              )
+              ),
+              onPressed: (){
+                print('Menu button');
+              },
           ),
           actions: <Widget> [
             IconButton(
@@ -61,11 +66,8 @@ class HomePage extends StatelessWidget {
           ],
         ),
       // TODO: Add a grid view (102)
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: const EdgeInsets.all(16.0),
-        childAspectRatio: 8.0 / 9.0,
-        children: _buildGridCards(context)
+      body: AsymmetricView(
+        products: ProductsRepository.loadProducts(Category.all),
       ),
       // TODO: Set resizeToAvoidBottomInset (101)
       resizeToAvoidBottomInset: false,
